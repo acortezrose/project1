@@ -9,8 +9,25 @@ def getData(file):
 #Input: file name
 #Ouput: return a list of dictionary objects where
 #the keys are from the first row in the data. and the values are each of the other rows
+	inFile = open(file, "r")
+	line = inFile.readline()
+	
+	dictList = []
+	line = line.strip("\n")
+	headers = line.split(",")
 
-	pass
+	# add other rows as values
+	while line:
+		line = line.strip("\n")
+		data = line.split(",")
+		dict = {}
+		for i in range(len(headers)):
+			dict[headers[i]] = data[i]
+		dictList.append(dict)
+		line = inFile.readline()
+	inFile.close()
+	return dictList
+
 
 def mySort(data,col):
 # Sort based on key/column
