@@ -84,8 +84,12 @@ def mySortPrint(a,col,fileName):
 # as fist,last,email
 #Input: list of dictionaries, col (key) to sort by and output file name
 #Output: No return value, but the file is written
+	outFile = open(fileName, "w")
+	sortedList = sorted(a, key=lambda k: k[col])
+	for i in sortedList:
+		outFile.write(i["First"] + "," + i["Last"] + "," + i["Email"] + "\n")
+	outFile.close()
 
-	pass
 
 def findAge(a):
 # def findAge(a):
