@@ -97,8 +97,21 @@ def findAge(a):
 # Output: Return the average age of the students and round that age to the nearest
 # integer.  You will need to work with the DOB and the current date to find the current
 # age in years.
+	allAges = 0
+	today = date.today()
+	for dict in a:
+		atpos1 = dict["DOB"].find("/")
+		atpos2 = (dict["DOB"][atpos1+1:]).find("/") + atpos1 + 1
 
-	pass
+		month = dict["DOB"][0:atpos1]
+		day = dict["DOB"][atpos1+1:atpos2]
+		year = dict["DOB"][atpos2+1:]
+		dob = date(int(year), int(month), int(day))
+
+		difference = relativedelta(today, dob).years
+		allAges = allAges + difference
+	return int(round(allAges / len(a)))
+
 
 
 ################################################################
