@@ -15,6 +15,7 @@ def getData(file):
 	dictList = []
 	line = line.strip("\n")
 	headers = line.split(",")
+	line = inFile.readline()
 
 	# add other rows as values
 	while line:
@@ -43,16 +44,39 @@ def classSizes(data):
 # Output: Return a list of tuples sorted by the number of students in that class in
 # descending order
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
+	seniorCount , juniorCount, sophomoreCount, freshmanCount = 0, 0, 0, 0
 
-	pass
+	for dict in data:
+		if dict["Class"] == "Senior":
+			seniorCount = seniorCount + 1
+		elif dict["Class"] == "Junior":
+			juniorCount = juniorCount + 1
+		elif dict["Class"] == "Sophomore":
+			sophomoreCount = sophomoreCount + 1
+		elif dict["Class"] == "Freshman":
+			freshmanCount = freshmanCount  + 1
+	tupleList = [('Senior', seniorCount), ('Junior', juniorCount), 
+		('Sophomore', sophomoreCount), ('Freshman', freshmanCount)]
+	return sorted(tupleList, key=lambda k: k[1], reverse=True)
 
 
 def findMonth(a):
 # Find the most common birth month form this data
 # Input: list of dictionaries
 # Output: Return the month (1-12) that had the most births in the data
+	months = {}
+	for i in range(1,13):
+		months[str(i)] = 0
 
-	pass
+	for dict in a:
+		dob = dict["DOB"]
+		atpos = dob.find("/")
+		month = dob[0:atpos]
+		months[month] = months[month] + 1
+
+	sortedMonths = sorted(months.items(), key=lambda kv:kv[1], reverse=True)
+	return int(sortedMonths[0][0])
+
 
 def mySortPrint(a,col,fileName):
 #Similar to mySort, but instead of returning single
@@ -94,7 +118,7 @@ def main():
 	total = 0
 	print("Read in Test data and store as a list of dictionaries")
 	data = getData('P1DataA.csv')
-	data2 = getData('P1DataB.csv')
+	data2 = getData('P1DataB2.csv')
 	total += test(type(data),type([]),50)
 
 	print()
